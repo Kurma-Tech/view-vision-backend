@@ -8,9 +8,6 @@ from src.user import views
 from src.user import apis
 
 
-router = SimpleRouter()
-router.register("", views.UserViewSet)
-
 auth_urlpatterns = [
     path("login/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path(
@@ -21,5 +18,4 @@ auth_urlpatterns = [
 
 urlpatterns = [
     path("auth/", include(auth_urlpatterns)),
-    path("", include(router.urls)),  
 ]
