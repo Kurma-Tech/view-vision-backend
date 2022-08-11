@@ -4,17 +4,25 @@ from rest_framework import status
 
 from .serializers import StreamSerializer
 
-from .models import StreamDevice
+from .models import Stream
 
-
-
-# class StreamView(APIView):
-#     def post(self, request):
-#         serializer = StreamSerializer(data=request.data)
-#         if serializer.is_valid():
-#             stream = serializer.save()
-#             StreamUserDevice.objects.create(userDevice=request.user, stream=stream)
-#             return Response(serializer.data, status = status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-            
+   
+class StreamView(APIView):
+    def get(self, request):
+        currentUser = request.user
+        streams = Stream.objects.filter(user=currentUser)
+        serializer = StreamSerializer(streams, many=True)
+        return Response(serializer.data)
     
+    def delete(self, request, id):
+        stream = Stream.objects.filter(id=id,user=request.user)
+        if len(stream)>0:
+            stream.delete()
+        else:
+            return Response({"Error":True, "Info":"Stream could not be found" })
+        return Response({"Error":False, "Info":"Stream Deleted"},status=status.HTTP_204_NO_CONTENT)
+            
+
+        
+        
+        

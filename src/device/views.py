@@ -1,12 +1,15 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from .models import Device, UserDevice 
 from .serializers import DeviceSerializer
 
 
-class DeviceView(APIView):
+class DeviceView(APIView, IsAuthenticated):
+    serializer_class = DeviceSerializer
+
     def get(self, request):
         currentUser = request.user
         devices = Device.objects.filter(user=currentUser)

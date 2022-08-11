@@ -5,8 +5,7 @@ from .models import StreamDevice, Stream
 class StreamDeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = StreamDevice
-        
-        
+              
 
 class StreamSerializer(serializers.ModelSerializer):
     class Meta:

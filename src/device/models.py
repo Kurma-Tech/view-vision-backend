@@ -18,15 +18,14 @@ class Device(models.Model):
     user = models.ManyToManyField(User, through="UserDevice")
 
     def __str__(self):
-        return self.address if self.address != None else str(self.id)
+        return self.deviceName if self.deviceName != None else str(self.id)
 
 class UserDevice(models.Model):
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user.first_name} - {self.device.deviceName}"
 
-
-# class StreamConnectionModel(models.Model):
     

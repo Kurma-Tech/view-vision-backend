@@ -52,7 +52,6 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     "safedelete",
     "rest_framework",
-    'drf_yasg',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + SDK_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -169,7 +168,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
     "USER_AUTHENTICATION_RULE": "src.user.rules.user_authentication_rule",
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
