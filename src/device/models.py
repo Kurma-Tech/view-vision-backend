@@ -27,3 +27,6 @@ class UserDevice(models.Model):
     def __str__(self):
         return f"{self.user.first_name} - {self.device.deviceName}"
 
+
+# class StreamConnectionModel(models.Model):
+    
