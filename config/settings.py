@@ -28,7 +28,10 @@ SECRET_KEY = 'django-insecure-34%oc6#ch7l$ejxuap*=+79=j0@!=4ww)sh2pwb%ehaypyeel8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = ['*']
 
 # Application definition
 DEFAULT_APPS = [
@@ -50,6 +53,7 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     "safedelete",
     "rest_framework",
+    'corsheaders',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + SDK_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -57,6 +61,7 @@ INSTALLED_APPS = DEFAULT_APPS + SDK_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -88,22 +93,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        "NAME": env.str("POSTGRES_DB"),
-        "USER": env.str("POSTGRES_USER"),
-        "PASSWORD": env.str("POSTGRES_PASSWORD"),
-        "HOST": env.str("POSTGRES_HOST"),
-        "PORT": env.str("POSTGRES_PORT"),
-    }
-}
 # DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         "NAME": env.str("POSTGRES_DB"),
+#         "USER": env.str("POSTGRES_USER"),
+#         "PASSWORD": env.str("POSTGRES_PASSWORD"),
+#         "HOST": env.str("POSTGRES_HOST"),
+#         "PORT": env.str("POSTGRES_PORT"),
+#     }
 # }
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3',
+   }
+}
 
 AUTH_USER_MODEL = 'user.User'
 
