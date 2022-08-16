@@ -15,9 +15,10 @@ class Device(models.Model):
     deviceName = models.CharField(max_length=255, null=True, blank=True)
     userName = models.CharField(max_length=255, default='admin')
     password = models.CharField(max_length=255)
+    user = models.ManyToManyField(User, through="UserDevice")
 
     def __str__(self):
-        return self.address
+        return self.address if self.address != None else str(self.id)
 
 class UserDevice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
