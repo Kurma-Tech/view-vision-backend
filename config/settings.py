@@ -44,6 +44,7 @@ SDK_APPS = []
 
 LOCAL_APPS = [
     'src.user.apps.UserConfig',
+    'src.device.apps.DeviceConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -97,6 +98,14 @@ DATABASES = {
         "PORT": env.str("POSTGRES_PORT"),
     }
 }
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+# }
+
+AUTH_USER_MODEL = 'user.User'
 
 
 # Password validation
