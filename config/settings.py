@@ -88,22 +88,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        "NAME": env.str("POSTGRES_DB"),
-        "USER": env.str("POSTGRES_USER"),
-        "PASSWORD": env.str("POSTGRES_PASSWORD"),
-        "HOST": env.str("POSTGRES_HOST"),
-        "PORT": env.str("POSTGRES_PORT"),
-    }
-}
 # DATABASES = {
 #    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
+#        'ENGINE': 'django.db.backends.postgresql',
+#        "NAME": env.str("POSTGRES_DB"),
+#        "USER": env.str("POSTGRES_USER"),
+#        "PASSWORD": env.str("POSTGRES_PASSWORD"),
+#        "HOST": env.str("POSTGRES_HOST"),
+#        "PORT": env.str("POSTGRES_PORT"),
 #    }
-# }
+#}
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': BASE_DIR / 'db.sqlite3',
+   }
+}
 
 AUTH_USER_MODEL = 'user.User'
 
