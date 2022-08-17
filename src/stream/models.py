@@ -19,7 +19,8 @@ class Stream(models.Model):
         choices=StreamStatusChoice.choices,
         default=StreamStatusChoice.INACTIVE,
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ManyToManyField(User, through="StreamUser")
+    device= models.ManyToManyField(Device, through="StreamDevice")
     
     def __str__(self):
         return self.url
@@ -30,12 +31,12 @@ class StreamDevice(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.stream.url} - {self.device.deviceName}"
+        return f"{self.device.address} - {self.stream.url}"
     
 
-class StreamDeviceUser(models.Model):
+class StreamUser(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    streamDevice = models.ForeignKey(StreamDevice, on_delete=models.CASCADE)
+    stream = models.ForeignKey(Stream, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user.first_name} - {self.streamDevice.stream.url}"
+        return f"{self.user.first_name} - {self.stream.url}"

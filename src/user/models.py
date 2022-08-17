@@ -33,7 +33,7 @@ class User(AbstractBaseUser, SafeDeleteModel, PermissionsMixin):
 
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-
+    business = models.ManyToManyField("BusinessProfile")
     class UserStatusChoice(models.TextChoices):
         PENDING = _("Pending")
         ACTIVE = _("Active")
@@ -62,3 +62,17 @@ class User(AbstractBaseUser, SafeDeleteModel, PermissionsMixin):
         self.status = User.UserStatusChoice.ACTIVE
         super().undelete(*args, **kwargs)
 
+
+
+class BusinessProfile(models.Model):
+    business_name = models.CharField(max_length=150)
+    email = models.EmailField(_("Email Address"), unique=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
+    address =  models.JSONField(null=True, blank=True)
+    document = models.URLField(max_length=200)
+    
+    def __str__(self):
+        return self.business_name
+    
+    
+    
