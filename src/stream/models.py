@@ -31,7 +31,7 @@ class StreamDevice(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.device.address} - {self.stream.url}"
+        return f"{self.device.deviceName} - {self.stream.url}"
     
 
 class StreamUser(models.Model):
@@ -39,4 +39,4 @@ class StreamUser(models.Model):
     stream = models.ForeignKey(Stream, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user.first_name} - {self.stream.url}"
+        return f"{self.user.email} - {self.stream.url}"

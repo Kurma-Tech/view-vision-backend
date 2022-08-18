@@ -14,19 +14,19 @@ class StreamUserSerializer(serializers.ModelSerializer):
         model=StreamUser
         fields='__all__'
 
+
 class StreamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stream 
         fields = "__all__"
-        
-        
+         
     def create(self, validated_data):
         return Stream.objects.create(**validated_data)
         
         
         
 
-     
+    
         
     
         

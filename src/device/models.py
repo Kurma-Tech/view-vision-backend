@@ -18,7 +18,7 @@ class Device(models.Model):
     user = models.ManyToManyField(User, through="UserDevice")
 
     def __str__(self):
-        return self.deviceName if self.deviceName != None else str(self.id)
+        return f"{self.deviceName} - {self.userName}"
 
 class UserDevice(models.Model):
     
@@ -26,6 +26,6 @@ class UserDevice(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user.first_name} - {self.device.deviceName}"
+        return f"{self.user.email} - {self.device.deviceName}"
 
     
