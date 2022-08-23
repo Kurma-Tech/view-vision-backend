@@ -1,14 +1,15 @@
 from rest_framework import serializers
 
-from .models import StreamDevice, Stream, StreamUser
 
-class StreamDeviceSerializer(serializers.ModelSerializer):
+from .models import StreamServer, Stream, StreamUser
+
+
+class StreamServerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = StreamDevice
+        model = StreamServer
         fields='__all__'
         
-              
-              
+                          
 class StreamUserSerializer(serializers.ModelSerializer):
     class Meta:
         model=StreamUser
@@ -24,7 +25,7 @@ class StreamSerializer(serializers.ModelSerializer):
         return Stream.objects.create(**validated_data)
         
         
-        
+
 
     
         

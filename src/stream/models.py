@@ -1,7 +1,7 @@
 from django.db import models
 
 
-from src.device.models import Device
+from src.device.models import Server
 from src.user.models import User
 
 
@@ -20,18 +20,18 @@ class Stream(models.Model):
         default=StreamStatusChoice.INACTIVE,
     )
     user = models.ManyToManyField(User, through="StreamUser")
-    device= models.ManyToManyField(Device, through="StreamDevice")
+    server= models.ManyToManyField(Server, through="StreamServer")
     
     def __str__(self):
         return self.url
    
     
-class StreamDevice(models.Model):
+class StreamServer(models.Model):
     stream = models.ForeignKey(Stream, on_delete=models.CASCADE)
-    device = models.ForeignKey(Device, on_delete=models.CASCADE)
+    server = models.ForeignKey(Server, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.device.deviceName} - {self.stream.url}"
+        return f"{self.server.serverName} - {self.stream.url}"
     
 
 class StreamUser(models.Model):
