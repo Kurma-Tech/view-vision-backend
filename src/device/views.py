@@ -1,9 +1,10 @@
-from ctypes import addressof
+
 from http import server
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from rest_framework import generics 
 
 from .models import Server, UserServer, Device
 from .serializers import DeviceSerializer, ServerSerializer
@@ -21,11 +22,7 @@ class ServerView(APIView, IsAuthenticated):
     
 
     def post(self, request):
-        server_name = request.data.get('server_name')
-        device = request.data.get('device')
-        device_list = Device.objects.filter(id__in=server)
         serializer = ServerSerializer(data=request.data)
-        
         if serializer.is_valid():
             server = serializer.save()
             UserServer.objects.create(user=request.user, server=server)
@@ -47,6 +44,7 @@ class ServerView(APIView, IsAuthenticated):
         except:
             return Response({"error": True, "info":"Server Error"})
 
+
     def delete(self, request, id, format=None):
         server = Server.objects.filter(id=id,user=request.user)
         if len(server) > 0:
@@ -66,22 +64,10 @@ class DeviceChannel(APIView, IsAuthenticated):
         return Response(serializer.data)
 
     
-    def post(self, request, **kwargs):
-        # address = request.data.get("address")
-        device = request.data.get("device")
-        
-        # devices = Device.objects.filter(id__in=device)
-        # instance = Server.objects.create(address=address)
-        
-        # for device in devices:
-        #     instance.device.add(device)
-        
-            
-        serializer = DeviceSerializer(data=request.data)
-        
+    def post(self, request, **kwargs):   
+        serializer = DeviceSerializer(data=request.data)     
         if serializer.is_valid():
-            serializer.save(user=self.request.user)   
-            
+            serializer.save(user=self.request.user)           
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -110,24 +96,16 @@ class DeviceChannel(APIView, IsAuthenticated):
         return Response({"error":True, "info":"device deleted"}, status=status.HTTP_204_NO_CONTENT)
     
     
-    def filter(self, request):
-        device = Device.objects.filter(channel_name=request.data.get("channel_name"))
-        serializer = DeviceSerializer(device, many=True)
-        return Response(serializer.data)
-        
-        
-
-    
-class ChannelsView(APIView, IsAuthenticated): 
-    
+            
+class ChannelsView(APIView, IsAuthenticated):  
     serializer_class = ServerSerializer()
-    
+   
     def get(self, request):
-        channels = Server.objects.filter(address=request.data.get("address"))
-        print(channels)
-        
-        # channels = Server.objects.filter(id=request.data.get("id")).values("channels")
-        # serializer = ServerSerializer(, )
+        devices = Server.objects.filter(address=request.data.get('address')).values('device')  
+        print(devices)
+        devic = Device.objects.filter(id__in=devices).values('channel_number')
+        return Response({"error":False,"lists":devic})
+    
 
         
         

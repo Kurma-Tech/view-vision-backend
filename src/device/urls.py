@@ -9,5 +9,6 @@ urlpatterns = [
     path("<int:id>", ServerView.as_view()),
     path("channel", DeviceChannel.as_view()),
     path("channel/<int:id>", DeviceChannel.as_view()),
-    path("channel/channelView", ChannelsView.as_view())
+    path("channel/channelView", ChannelsView.as_view()),
+    path("channel/filter", ChannelsView.as_view())
 ]

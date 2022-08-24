@@ -19,23 +19,16 @@ class DeviceSerializer(serializers.ModelSerializer):
       
 
 class ServerSerializer(serializers.ModelSerializer):
-    device  = DeviceSerializer(many=True, read_only=True)
+    # device  = DeviceSerializer(many=True, read_only=True)
     deviceType_id = serializers.IntegerField()
     class Meta:
         model=Server
-        fields = ["port", "address", "server_name", "user_name", "password", "deviceType_id","device"]
+        exclude=("device","deviceType","user")
 
-    def create(self,instance, validated_data):
-        instance.device_data = validated_data.get('device', instance.device_data)
-        print(instance.device_data)
-        # for device in device_data:
-        #     d=dict(device)
-        # return Server.objects.create(**validated_data, device=d['device'])
+    def create(self, validated_data):
         return Server.objects.create(**validated_data)
         
-        
-    
-    
+          
 class StreamServerSerializer(serializers.ModelSerializer):
     channel = serializers.SerializerMethodField()
     username = serializers.CharField(source="userName")
