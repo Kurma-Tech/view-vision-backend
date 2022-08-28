@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
@@ -17,6 +18,7 @@ class GenderChoices(models.TextChoices):
     UNKNOWN = "UNKNOWN", _("Unknown")
 
 class User(AbstractBaseUser, SafeDeleteModel, PermissionsMixin):
+    business = models.ForeignKey("Business", on_delete=models.CASCADE, null=True, blank=True)
     email = models.EmailField(_("Email Address"), unique=True)
     first_name = models.CharField(max_length=64, null=True, blank=True)
     last_name = models.CharField(max_length=64, null=True, blank=True)
@@ -33,7 +35,8 @@ class User(AbstractBaseUser, SafeDeleteModel, PermissionsMixin):
 
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-
+    
+    
     class UserStatusChoice(models.TextChoices):
         PENDING = _("Pending")
         ACTIVE = _("Active")
@@ -62,3 +65,20 @@ class User(AbstractBaseUser, SafeDeleteModel, PermissionsMixin):
         self.status = User.UserStatusChoice.ACTIVE
         super().undelete(*args, **kwargs)
 
+
+
+class Business(models.Model):
+    business_name = models.CharField(max_length=150)
+    email = models.EmailField(_("Email Address"), unique=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
+    address =  models.JSONField(null=True, blank=True)
+    document = models.URLField(max_length=200)
+    password = models.CharField(max_length=80)
+   
+   
+    
+    def __str__(self):
+        return self.business_name
+    
+    
+    

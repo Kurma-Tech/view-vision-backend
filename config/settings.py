@@ -14,6 +14,7 @@ import environ
 from pathlib import Path
 from datetime import timedelta
 
+
 env = environ.Env()
 environ.Env.read_env(env_file=".env")
 
@@ -49,6 +50,7 @@ SDK_APPS = []
 LOCAL_APPS = [
     'src.user.apps.UserConfig',
     'src.device.apps.DeviceConfig',
+    'src.stream.apps.StreamConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -172,7 +174,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
     "USER_AUTHENTICATION_RULE": "src.user.rules.user_authentication_rule",
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
