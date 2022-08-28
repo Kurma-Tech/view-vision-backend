@@ -35,7 +35,7 @@ class UserServer(models.Model):
 class Device(models.Model):
     channel_number = models.PositiveIntegerField(null=True, blank=True)
     device_name = models.CharField(max_length=100,blank=True, null=True) 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return f"{self.device_name} - {self.channel_number}"
