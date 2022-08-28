@@ -9,11 +9,10 @@ from rest_framework import status
 
 from .models import Business
 
-from .serializers import RegistrationSerializer, BusinessSerializer
+from .serializers import RegistrationSerializer, BusinessUserRegistrationSerializer
 
 
 User = get_user_model()
-
 
 class RegistrationView(generics.CreateAPIView):
     model = User
@@ -35,16 +34,15 @@ class RegistrationView(generics.CreateAPIView):
                 status=201,
             )
             
-            
 class BusinessRegestrationView(generics.CreateAPIView):
     model = Business
-    serializer_class = BusinessSerializer
+    serializer_class = BusinessUserRegistrationSerializer
     permission_classes = (AllowAny,)
     
     def post(self, request):
-        serializer = BusinessSerializer(data=request.data)
+        serializer = BusinessUserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()    
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

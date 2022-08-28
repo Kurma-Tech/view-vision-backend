@@ -5,10 +5,8 @@ from rest_framework import status
 import requests
 import json
 
-
 from src.device.models import Server
 from src.device.serializers import StreamServerSerializer
-
 
 from .serializers import StreamSerializer
 from .models import Stream, StreamServer, StreamUser
