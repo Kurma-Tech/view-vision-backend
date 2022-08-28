@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include 
 
+from rest_framework import permissions
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('src.user.urls')),
+    path('user/',include('src.user.urls')),
     path('device/',include('src.device.urls')),
+    path('stream/', include('src.stream.urls')),
 ]
+
