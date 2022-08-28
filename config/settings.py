@@ -14,6 +14,7 @@ import environ
 from pathlib import Path
 from datetime import timedelta
 
+
 env = environ.Env()
 environ.Env.read_env(env_file=".env")
 
@@ -49,6 +50,7 @@ SDK_APPS = []
 LOCAL_APPS = [
     'src.user.apps.UserConfig',
     'src.device.apps.DeviceConfig',
+    'src.stream.apps.StreamConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -94,6 +96,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+<<<<<<< HEAD
 # DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql',
@@ -104,12 +107,24 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #        "PORT": env.str("POSTGRES_PORT"),
 #    }
 #}
+=======
+>>>>>>> c73e426712b8d18c0bb7ab69163eac6c011990fc
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': BASE_DIR / 'db.sqlite3',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        "NAME": env.str("POSTGRES_DB"),
+        "USER": env.str("POSTGRES_USER"),
+        "PASSWORD": env.str("POSTGRES_PASSWORD"),
+        "HOST": env.str("POSTGRES_HOST"),
+        "PORT": env.str("POSTGRES_PORT"),
+    }
 }
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+# }
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -172,7 +187,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
     "USER_AUTHENTICATION_RULE": "src.user.rules.user_authentication_rule",
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

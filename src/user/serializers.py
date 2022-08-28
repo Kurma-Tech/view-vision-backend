@@ -9,6 +9,7 @@ from rest_framework.validators import UniqueValidator
 from .validators import validate_password
 
 User = get_user_model()
+from .models import Business, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -70,3 +71,19 @@ class RegistrationSerializer(serializers.ModelSerializer):
             status=User.UserStatusChoice.PENDING,
         )
         return user
+        
+class BusinessUserRegistrationSerializer(serializers.ModelSerializer):
+    user = RegistrationSerializer(write_only=True)
+
+    class Meta:
+        model = Business
+        fields = ["business_name","phone", "address", "user"]
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user_instance = User.objects.create(**user_data)
+        business_instance = Business.objects.create(**validated_data)
+        business_instance.users.add(user_instance)
+        return business_instance
+
+
