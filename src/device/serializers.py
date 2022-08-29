@@ -22,12 +22,16 @@ class ServerSerializer(serializers.ModelSerializer):
     # device  = DeviceSerializer(many=True, read_only=True)
     deviceType_id = serializers.IntegerField()
     deviceName = serializers.SerializerMethodField()
+    userName = serializers.SerializerMethodField()
     class Meta:
         model=Server
         exclude=("device","deviceType","user")
 
-    def get_deviceNmae(self, obj):
+    def get_deviceName(self, obj):
         return obj.server_name
+        
+    def get_userName(self, obj):
+        return obj.user_name
 
     def create(self, validated_data):
         return Server.objects.create(**validated_data)
