@@ -21,7 +21,7 @@ from rest_framework import permissions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/',include('src.user.urls')),
+    path('',include('src.user.urls')),
     path('device/',include('src.device.urls')),
     path('stream/', include('src.stream.urls')),
 ]
