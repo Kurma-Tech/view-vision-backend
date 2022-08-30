@@ -13,11 +13,9 @@ from .models import User
 class UserView(APIView):
     permission_classes = [IsAuthenticated]
     
+    
     def get(self, request):
         # currentUser = request.user
         users = User.objects.filter()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-    
-    
-    

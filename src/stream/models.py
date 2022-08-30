@@ -31,7 +31,7 @@ class StreamServer(models.Model):
     server = models.ForeignKey(Server, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.server.serverName} - {self.stream.url}"
+        return f"{self.server.server_name} - {self.stream.url}"
     
 
 class StreamUser(models.Model):

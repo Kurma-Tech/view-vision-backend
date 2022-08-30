@@ -13,10 +13,12 @@ import json
 
 class ServerView(APIView, IsAuthenticated):
     serializer_class = ServerSerializer
+   
+   
 
     def get(self, request):
         currentUser = request.user
-        server = Server.objects.all()
+        server = Server.objects.filter(user=request.user)
         serializer = ServerSerializer(server, many=True)
         return Response(serializer.data)
     
@@ -58,7 +60,6 @@ class DeviceChannel(APIView, IsAuthenticated):
     serializer=DeviceSerializer
      
     def get(self, request):
-        currentUser = request.user
         devices= Device.objects.filter(user=request.user)
         serializer = DeviceSerializer(devices, many=True)
         return Response(serializer.data)
@@ -102,7 +103,8 @@ class ChannelsView(APIView, IsAuthenticated):
    
     def get(self, request):
         devices = Server.objects.filter(address=request.data.get('address')).values('device')  
-        print(devices)
+        print(devices
+              )
         devic = Device.objects.filter(id__in=devices).values('channel_number')
         return Response({"error":False,"lists":devic})
     

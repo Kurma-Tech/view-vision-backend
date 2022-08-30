@@ -11,7 +11,7 @@ class DeviceType(models.Model):
     
 
 class Server(models.Model):
-    deviceType= models.ForeignKey(DeviceType, on_delete=models.CASCADE)
+    device_type= models.ForeignKey(DeviceType, on_delete=models.CASCADE)
     port = models.CharField(max_length=255, null=True, blank=True) 
     address = models.TextField(null=True, blank=True) 
     server_name = models.CharField(max_length=255, null=True, blank=True)
@@ -22,6 +22,9 @@ class Server(models.Model):
     
     def combined_fields(self):
         return f"{self.user_name} - {self.address} - {self.server_name}"
+    
+    def __str__(self):
+        return f"{self.server_name}"
     
 
 class UserServer(models.Model):

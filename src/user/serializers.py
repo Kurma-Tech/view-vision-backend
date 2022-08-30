@@ -80,10 +80,12 @@ class BusinessUserRegistrationSerializer(serializers.ModelSerializer):
         fields = ["business_name","phone", "address", "user"]
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user')
+        user_data = validated_data.pop("user")
         user_instance = User.objects.create(**user_data)
         business_instance = Business.objects.create(**validated_data)
-        business_instance.users.add(user_instance)
+        business_instance.user.add(user_instance)
         return business_instance
+    
+    
 
 

@@ -17,10 +17,12 @@ class StreamAPI(APIView):
         try:
             server = Server.objects.get(id=id,user=request.user)
             serializer = StreamServerSerializer(server)
+            
             payload_dict = serializer.data
-            breakpoint()
             print(payload_dict)
+            print(True)
             r = requests.post("http://139.162.230.224/test", data=payload_dict)
+            print(r.status_code)
             if (r.status_code==200):
                 stream = Stream.objects.create(url=json.loads(r.text)["data"]["streamUrl"], status="active")
                 StreamServer.objects.create(stream=stream, server=server)
