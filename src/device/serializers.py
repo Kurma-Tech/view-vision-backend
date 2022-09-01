@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from .models import DeviceType, Server, Device
+
+from .models import DeviceType, Server, Device, Provider
 
 
 class DeviceTypeSerializer(serializers.ModelSerializer):
@@ -19,15 +20,19 @@ class DeviceSerializer(serializers.ModelSerializer):
       
 
 class ServerSerializer(serializers.ModelSerializer):
-    # device  = DeviceSerializer(many=True, read_only=True)
     device_type_id = serializers.IntegerField()
     
     class Meta:
         model=Server
         exclude=("device","user","device_type")
-
     
     def create(self, validated_data):
+        print(validated_data)
+        # providerQuery = Provider.objects.filter(id=dict(validated_data)["provider"])
+        # if (providerQuery.exists()):
+        # provider = providerQuery.first()
+        validated_data["rtsp_port"] = validated_data["provider"].rtsp_port
+        validated_data["http_port"] = validated_data["provider"].http_port
         return Server.objects.create(**validated_data)
         
           
@@ -39,6 +44,11 @@ class StreamServerSerializer(serializers.ModelSerializer):
         
     def get_channel(self, obj):
         return "102"
+    
+class ProviderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Provider
+        fields = ("id", "rtsp_port","http_port")
     
    
   
