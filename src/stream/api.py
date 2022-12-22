@@ -20,7 +20,7 @@ class StreamAPI(APIView):
             payload_dict = serializer.data
             breakpoint()
             print(payload_dict)
-            r = requests.post("http://139.162.230.224/test", data=payload_dict)
+            r = requests.post("http://212.71.235.213/test", data=payload_dict)
             if (r.status_code==200):
                 stream = Stream.objects.create(url=json.loads(r.text)["data"]["streamUrl"], status="active")
                 StreamServer.objects.create(stream=stream, server=server)
